@@ -1,0 +1,9 @@
+author: brenhein, NerdsWBNerds
+database: false
+description: Tower Control plugin for NerdsPvP.
+generator: http://dinnerbone.com/minecraft/tools/pluginator/
+main: com.nerdspvp.tc.TowerControl
+name: TowerControl
+startup: postworld
+url: http://nerdspvp.com/
+version: '1.0'
