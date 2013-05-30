@@ -2,6 +2,6 @@ package com.nerdspvp.tc;
 
 public abstract class Game {
 
-    abstract WorldWrapper getWorld();
+    public abstract WorldWrapper getWorld();
 
 }

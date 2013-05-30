@@ -25,7 +25,7 @@ public class TCInstance {
     }
 
     public void addPlayer(Player player){
-        gamePlayers.add(new GamePlayer(player));
+        gamePlayers.add(new GamePlayer(player, this));
     }
 
     public String getInstanceIdentifier(){
