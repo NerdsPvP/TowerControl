@@ -14,6 +14,8 @@ public class TowerControl extends JavaPlugin {
     }
 
     public void onEnable() {
+        getServer().getPluginManager().registerEvents(new TCListener(), this);
+
         instances.add(new TCInstance(20, "Alpha", new StandardGame()));
     }
 
