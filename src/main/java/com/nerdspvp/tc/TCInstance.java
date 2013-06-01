@@ -15,10 +15,10 @@ public class TCInstance {
 
     private List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
 
-    public TCInstance(int maxPlayers, String instanceIdentifier, Game currentGame) {
+    public TCInstance(int maxPlayers, String instanceIdentifier) {
         this.maxPlayers = maxPlayers;
         this.instanceIdentifier = instanceIdentifier;
-        this.currentGame = currentGame;
+        this.currentGame = new StandardGame(this);
     }
 
     public List<GamePlayer> getGamePlayers(){
@@ -41,6 +41,12 @@ public class TCInstance {
 
     public Game getCurrentGame(){
         return this.currentGame;
+    }
+
+    public void broadcast(String string){
+        for(GamePlayer gp : gamePlayers){
+            gp.getHandle().sendMessage(string);
+        }
     }
 
 }

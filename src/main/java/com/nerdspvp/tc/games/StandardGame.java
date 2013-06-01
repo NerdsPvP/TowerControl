@@ -2,6 +2,7 @@ package com.nerdspvp.tc.games;
 
 import com.nerdspvp.tc.Game;
 import com.nerdspvp.tc.GamePlayer;
+import com.nerdspvp.tc.TCInstance;
 import com.nerdspvp.tc.WorldWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,9 +16,16 @@ public class StandardGame extends Game {
     private Team goldTeam;
     private Team ironTeam;
 
-    public StandardGame(){
+    public boolean goldPotionTower = false;
+    public boolean ironPotionTower = false;
+
+    public TCInstance parent;
+
+    public StandardGame(TCInstance parent){
         this.instanceScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        this.parent = parent;
         setupTeams();
+
     }
 
     public Team getIronTeam() {
@@ -30,11 +38,11 @@ public class StandardGame extends Game {
 
 
     private void setupTeams(){
-        goldTeam = instanceScoreboard.registerNewTeam("Gold");
+        goldTeam = instanceScoreboard.registerNewTeam(parent.getInstanceIdentifier() + "-Gold");
         goldTeam.setAllowFriendlyFire(false);
         goldTeam.setCanSeeFriendlyInvisibles(true);
         goldTeam.setPrefix(ChatColor.GOLD + "");
-        ironTeam = instanceScoreboard.registerNewTeam("Iron");
+        ironTeam = instanceScoreboard.registerNewTeam(parent.getInstanceIdentifier() + "-Iron");
         ironTeam.setAllowFriendlyFire(false);
         ironTeam.setCanSeeFriendlyInvisibles(true);
         ironTeam.setPrefix(ChatColor.GRAY + "");
@@ -59,4 +67,6 @@ public class StandardGame extends Game {
         ironTeam.removePlayer(gp.getHandle());
         goldTeam.removePlayer(gp.getHandle());
     }
+
+
 }

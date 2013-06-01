@@ -50,9 +50,9 @@ public class TCListener implements Listener {
             case PHYSICAL:
                 switch(e.getClickedBlock().getType()){
                     case STONE_PLATE:
-                        Sign signBelow = (Sign)e.getClickedBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.DOWN);
+                        Sign signBelow = (Sign)e.getClickedBlock().getRelative(BlockFace.DOWN).getRelative(BlockFace.DOWN).getState();
                         if(PotionTowerEntity.validate(signBelow)){
-                            new PotionTowerEntity().onTrigger(signBelow, e.getClickedBlock());
+                            new PotionTowerEntity().onTrigger(signBelow, e.getClickedBlock(), e.getPlayer());
                         }
                         break;
                 }
