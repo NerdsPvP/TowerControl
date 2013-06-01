@@ -1,6 +1,7 @@
 package com.nerdspvp.tc;
 
 import com.nerdspvp.tc.games.StandardGame;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -28,7 +29,9 @@ public class TCInstance {
     public void addPlayer(Player player, String team){
         GamePlayer gamePlayer = new GamePlayer(player, this);
         gamePlayers.add(gamePlayer);
+        player.teleport(this.currentGame.getWorld().getWorld().getSpawnLocation());
         currentGame.addPlayerToTeam(gamePlayer, team);
+        broadcast(ChatColor.BLUE + " + " + ChatColor.WHITE + player.getName() + " is joining the " + team + " team.");
     }
 
     public String getInstanceIdentifier(){

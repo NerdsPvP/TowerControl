@@ -1,6 +1,8 @@
 package com.nerdspvp.tc;
 
-import com.nerdspvp.tc.games.StandardGame;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,14 +13,24 @@ public class TowerControl extends JavaPlugin {
 
     public static List<TCInstance> instances = new ArrayList<TCInstance>();
 
+    public static TowerControl towerControl;
+
     public void onDisable() {
+
+        for(TCInstance s : instances){
+            s.getCurrentGame().getWorld().disposeWorld();
+        }
+
     }
 
     public void onEnable() {
+        towerControl = this;
+
         getServer().getPluginManager().registerEvents(new TCListener(), this);
 
         instances.add(new TCInstance(20, "Alpha"));
         instances.add(new TCInstance(20, "Beta"));
+
     }
 
     public static void prepareForQuit(Player player){
@@ -49,6 +61,14 @@ public class TowerControl extends JavaPlugin {
             }
         }
         return null;
+    }
+
+    public static void debug(String message){
+        for(Player p : Bukkit.getServer().getOnlinePlayers()){
+            if(p.hasPermission("towercontrol.dev")){
+                p.sendMessage(ChatColor.GRAY + "// " + message);
+            }
+        }
     }
 
 
