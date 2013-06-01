@@ -1,9 +1,6 @@
 package com.nerdspvp.tc.games;
 
-import com.nerdspvp.tc.Game;
-import com.nerdspvp.tc.GamePlayer;
-import com.nerdspvp.tc.TCInstance;
-import com.nerdspvp.tc.WorldWrapper;
+import com.nerdspvp.tc.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,19 +35,19 @@ public class StandardGame extends Game {
         this.instanceScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.parent = parent;
         setupTeams();
-        this.currentWorld = new WorldWrapper(new WorldCreator("MTC"), parent);
-        currentWorld.getWorld();
-        findSpawns();
+        this.currentWorld = new WorldWrapper(new WorldCreator("MTC-" + parent.getInstanceIdentifier()), parent);
     }
 
     private void findSpawns() {
 
         for(Sign s : currentWorld.signEntities){
             if(s.getLine(0).equals("goldspawn")){
-                goldSpawn.add(s.getLocation().add(0,3,0));
+                goldSpawn.add(s.getLocation().add(0, 3, 0));
+                TowerControl.debug("Loaded spawn: " + s.getLocation().toString());
             } else if(s.getLine(0).equals("ironspawn")){
                 ironSpawn.add(s.getLocation().add(0,3,0));
-        }
+                TowerControl.debug("Loaded spawn: " + s.getLocation().toString());
+            }
         }
 
     }
@@ -80,26 +77,37 @@ public class StandardGame extends Game {
         return this.currentWorld;
     }
 
-    public void spawnGold(Player p){
+    private void spawnGold(Player p){
+        findSpawns();
         Random rnd = new Random();
         int ourSpawn = rnd.nextInt(goldSpawn.size());
         p.teleport(goldSpawn.get(ourSpawn));
     }
 
-    public void spawnIron(Player p){
+    private void spawnIron(Player p){
+        findSpawns();
         Random rnd = new Random();
         int ourSpawn = rnd.nextInt(ironSpawn.size());
         p.teleport(ironSpawn.get(ourSpawn));
     }
 
+    public void spawnPlayer(Player p){
+        if(goldTeam.hasPlayer(p)){
+            spawnGold(p);
+        } else if(ironTeam.hasPlayer(p)){
+            spawnIron(p);
+        }
+    }
+
     @Override
     public void addPlayerToTeam(GamePlayer gp, String teamIdentifier) {
-        if(teamIdentifier.equals("gold")){
+        spawnPlayer(gp.getHandle());
+        if(teamIdentifier.equalsIgnoreCase("gold")){
             goldTeam.addPlayer(gp.getHandle());
-            spawnGold(gp.getHandle());
+
         } else {
             ironTeam.addPlayer(gp.getHandle());
-            spawnIron(gp.getHandle());
+
         }
     }
 

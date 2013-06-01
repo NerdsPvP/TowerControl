@@ -18,7 +18,8 @@ public class TowerControl extends JavaPlugin {
     public void onDisable() {
 
         for(TCInstance s : instances){
-            s.getCurrentGame().getWorld().disposeWorld();
+            debug("Unloading world...");
+            s.getCurrentGame().getWorld().deleteWorld();
         }
 
     }
@@ -30,6 +31,11 @@ public class TowerControl extends JavaPlugin {
 
         instances.add(new TCInstance(20, "Alpha"));
         instances.add(new TCInstance(20, "Beta"));
+
+        for(TCInstance s : instances){
+            debug("Creating worlds...");
+            s.getCurrentGame().getWorld().copyWorld();
+        }
 
     }
 
