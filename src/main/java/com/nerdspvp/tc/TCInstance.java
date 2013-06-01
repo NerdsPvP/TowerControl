@@ -1,5 +1,6 @@
 package com.nerdspvp.tc;
 
+import com.nerdspvp.tc.games.StandardGame;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -24,8 +25,10 @@ public class TCInstance {
         return gamePlayers;
     }
 
-    public void addPlayer(Player player){
-        gamePlayers.add(new GamePlayer(player, this));
+    public void addPlayer(Player player, String team){
+        GamePlayer gamePlayer = new GamePlayer(player, this);
+        gamePlayers.add(gamePlayer);
+        currentGame.addPlayerToTeam(gamePlayer, team);
     }
 
     public String getInstanceIdentifier(){

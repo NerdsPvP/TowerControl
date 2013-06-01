@@ -1,19 +1,20 @@
 package com.nerdspvp.tc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class GamePlayer {
 
-    private Player playerHandle;
+    private String playerName;
     private TCInstance tcInstance;
 
     public GamePlayer(Player player, TCInstance instance){
-        this.playerHandle = player;
+        this.playerName = player.getName();
         this.tcInstance = instance;
     }
 
     public Player getHandle(){
-        return this.playerHandle;
+        return Bukkit.getServer().getPlayerExact(this.playerName);
     }
 
     public TCInstance getTcInstance() {

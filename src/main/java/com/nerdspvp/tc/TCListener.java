@@ -6,6 +6,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class TCListener implements Listener {
 
@@ -31,5 +32,10 @@ public class TCListener implements Listener {
     public void onBlockBreak(BlockBreakEvent e){
         if(!e.getPlayer().hasPermission("towercontrol.bypass.blockbreak"))
             e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e){
+        TowerControl.prepareForQuit(e.getPlayer());
     }
 }
