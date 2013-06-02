@@ -20,4 +20,8 @@ public class GamePlayer {
     public TCInstance getTcInstance() {
         return tcInstance;
     }
+
+	public String getPlayerName(){
+		return playerName;
+	}
 }

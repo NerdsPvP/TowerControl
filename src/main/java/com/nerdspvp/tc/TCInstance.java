@@ -1,6 +1,7 @@
 package com.nerdspvp.tc;
 
 import com.nerdspvp.tc.games.StandardGame;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -16,7 +17,10 @@ public class TCInstance {
 
     private List<GamePlayer> gamePlayers = new ArrayList<GamePlayer>();
 
-    public TCInstance(int maxPlayers, String instanceIdentifier) {
+	private TowerControl plugin;
+
+    public TCInstance(int maxPlayers, String instanceIdentifier, TowerControl tc) {
+		this.plugin = tc;
         this.maxPlayers = maxPlayers;
         this.instanceIdentifier = instanceIdentifier;
         this.currentGame = new StandardGame(this);
@@ -26,13 +30,20 @@ public class TCInstance {
         return gamePlayers;
     }
 
-    public void addPlayer(Player player, String team){
+    public void addPlayer(final Player player, String team){
         GamePlayer gamePlayer = new GamePlayer(player, this);
         gamePlayers.add(gamePlayer);
-        player.teleport(this.currentGame.getWorld().getWorld().getSpawnLocation());
         currentGame.addPlayerToTeam(gamePlayer, team);
         broadcast(ChatColor.BLUE + " + " + ChatColor.WHITE + player.getName() + " is joining the " + team + " team.");
-    }
+
+		final Game game = this.currentGame;
+
+		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+			public void run() {
+				player.teleport(game.getWorld().getWorld().getSpawnLocation());
+			}
+		});
+	}
 
     public String getInstanceIdentifier(){
         return this.instanceIdentifier;
@@ -52,4 +63,7 @@ public class TCInstance {
         }
     }
 
+	public TowerControl getPlugin(){
+		return plugin;
+	}
 }

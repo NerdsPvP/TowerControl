@@ -29,8 +29,8 @@ public class TowerControl extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new TCListener(), this);
 
-        instances.add(new TCInstance(20, "Alpha"));
-        instances.add(new TCInstance(20, "Beta"));
+        instances.add(new TCInstance(20, "Alpha", this));
+        instances.add(new TCInstance(20, "Beta", this));
 
         for(TCInstance s : instances){
             debug("Creating worlds...");
@@ -61,7 +61,7 @@ public class TowerControl extends JavaPlugin {
     public static TCInstance getPlayerInstance(String name) throws NullPointerException{
         for(TCInstance instance : instances){
             for(GamePlayer gp : instance.getGamePlayers()){
-                if(name.equals(gp.getHandle().getName())){
+                if(name.equalsIgnoreCase(gp.getPlayerName())){
                     return instance;
                 }
             }

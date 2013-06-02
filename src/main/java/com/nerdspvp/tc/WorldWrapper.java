@@ -69,8 +69,17 @@ public class WorldWrapper {
 
     public void copyWorld(){
         try {
-            FileUtils.forceDelete(new File(new File(Bukkit.getServer().getWorldContainer(), "MTC"), "uid.dat"));
-            FileUtils.copyDirectory(new File(Bukkit.getServer().getWorldContainer(), "MTC"), new File(Bukkit.getServer().getWorldContainer(), worldCreator.name()));
+			String path = Bukkit.getServer().getWorldContainer().getAbsolutePath();
+
+			path = path.substring(0, path.length() - 2);
+
+			File MTCDir = new File(path, "MTC");
+
+			File toDelete = new File(MTCDir.getAbsolutePath() + "/uid.dat");
+
+			if(toDelete.exists())
+            	FileUtils.forceDelete(toDelete);
+            FileUtils.copyDirectory(MTCDir, new File(Bukkit.getServer().getWorldContainer(), worldCreator.name()));
         } catch (Exception e){
             e.printStackTrace();
         }
