@@ -1,6 +1,5 @@
 package com.nerdspvp.tc;
 
-import com.nerdspvp.tc.games.StandardGame;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class TCInstance {
 		this.plugin = tc;
         this.maxPlayers = maxPlayers;
         this.instanceIdentifier = instanceIdentifier;
-        this.currentGame = new StandardGame(this);
+        this.currentGame = new Game(this);
     }
 
     public List<GamePlayer> getGamePlayers(){

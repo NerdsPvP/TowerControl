@@ -2,7 +2,7 @@ package com.nerdspvp.tc.signentities;
 
 import com.nerdspvp.tc.TCInstance;
 import com.nerdspvp.tc.TowerControl;
-import com.nerdspvp.tc.games.StandardGame;
+import com.nerdspvp.tc.Game;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,11 +11,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.ThrownPotion;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class PotionTowerEntity extends SignEntity {
 
@@ -26,7 +22,7 @@ public class PotionTowerEntity extends SignEntity {
     public void onTrigger(Sign sign, Block triggerer, Player player) {
         TowerControl.debug("Middle tower trigger entity (" + StringUtils.join(sign.getLines(), ";") + ")");
         TCInstance instance = TowerControl.getPlayerInstance(player.getName());
-        StandardGame game = (StandardGame)instance.getCurrentGame();
+        Game game = (Game)instance.getCurrentGame();
         Block indicator = triggerer.getRelative(BlockFace.DOWN);
         if(isAlreadyCapped(indicator, player)){
             return;
@@ -55,7 +51,7 @@ public class PotionTowerEntity extends SignEntity {
 
     protected boolean isAlreadyCapped(Block indicator, Player player){
         TCInstance instance = TowerControl.getPlayerInstance(player.getName());
-        StandardGame game = (StandardGame)instance.getCurrentGame();
+        Game game = (Game)instance.getCurrentGame();
         if((indicator.getType() == Material.IRON_BLOCK && game.instanceScoreboard.getTeam("Iron").hasPlayer(player.getPlayer()))
                 || (indicator.getType() == Material.GOLD_BLOCK && game.instanceScoreboard.getTeam("Gold").hasPlayer(player.getPlayer()))){
             return true;

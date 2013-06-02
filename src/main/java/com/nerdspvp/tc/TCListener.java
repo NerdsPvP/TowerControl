@@ -1,16 +1,12 @@
 package com.nerdspvp.tc;
 
-import com.nerdspvp.tc.games.StandardGame;
 import com.nerdspvp.tc.signentities.PotionTowerEntity;
-import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
@@ -69,7 +65,7 @@ public class TCListener implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e){
         TCInstance instance = TowerControl.getPlayerInstance(e.getPlayer().getName());
-        StandardGame sg = (StandardGame) instance.getCurrentGame();
+        Game sg = (Game) instance.getCurrentGame();
         e.setRespawnLocation(sg.getWorld().getWorld().getSpawnLocation());
         sg.spawnPlayer(e.getPlayer());
     }
